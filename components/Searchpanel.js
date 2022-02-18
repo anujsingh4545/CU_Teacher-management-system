@@ -133,7 +133,7 @@ function Searchpanel() {
         </a>
       </section>
 
-      <section className="my-32 flex w-[100%] max-w-7xl flex-col items-center ">
+      <section className="my-20 flex w-[100%] max-w-7xl flex-col items-center ">
         {data.length > 0
           ? data?.map((index) => (
               <Details
