@@ -11,6 +11,9 @@ import {
 import { useSession } from 'next-auth/react'
 import { db } from '../firebase'
 import Leavers from './Leavers'
+import { useRecoilState } from 'recoil'
+import { storeReplace } from '../atom/storeReplace'
+import { storeAbsent } from '../atom/storeAbsent'
 
 function Absent() {
   const { data: session } = useSession()
@@ -18,6 +21,35 @@ function Absent() {
   const select2 = useRef(null)
   const [loading, setLoading] = useState(false)
   const [absent, setAbsent] = useState([])
+  const [replace, setReplace] = useRecoilState(storeReplace)
+  const [absents, setAbsents] = useRecoilState(storeAbsent)
+
+  let union = [...new Set([...absents, ...replace])]
+
+  const Faculty = [
+    'Shikha Gupta',
+    'Neha Sharma',
+    'Sharanjit Kaur',
+    'Durgesh Srivastava',
+    'Richa Singh ',
+    'Arun Mittal',
+    'Ashok Kumar',
+    'Leeza ',
+    'Resham Arya ',
+    'Hariharan',
+    'Shivani Aggarwal',
+    'Archna Sharma',
+    'Monika Singh',
+    'Omnamah Shivay',
+    'Amit Garg',
+    'Deepak Kumar Mehta',
+    'Prabhjot Singh',
+    'Surender Singh',
+    'Vinay Sharma',
+    'Vijay Kumar',
+  ]
+
+  let replacement = Faculty.filter((x) => union.indexOf(x) === -1)
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -40,123 +72,15 @@ function Absent() {
       >
         Pick a teacher ...
       </option>
-      <option
-        value="Shikha Gupta"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Shikha Gupta
-      </option>
-      <option
-        value="Neha Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Neha Sharma
-      </option>
-      <option
-        value="Sharanjit Kaur"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Sharanjit Kaur
-      </option>
-      <option
-        value="Durgesh Srivastava"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Durgesh Srivastava
-      </option>
-      <option
-        value="Richa Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Richa Singh
-      </option>
-      <option
-        value="Arun Mittal"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Arun Mittal
-      </option>
-      <option
-        value="Ashok Kumar"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Ashok Kumar
-      </option>
-      <option value="Leeza" className="bg-black text-[1rem] sm:text-[1.5rem]">
-        Leeza
-      </option>
-      <option
-        value="Resham Arya"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Resham Arya
-      </option>
-      <option
-        value="Hariharan"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Hariharan
-      </option>
-      <option
-        value="Shivani Aggarwal"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Shivani Aggarwal
-      </option>
-      <option
-        value="Archna Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Archna Sharma
-      </option>
-      <option
-        value="Monika Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Monika Singh
-      </option>
-      <option
-        value="Omnamah Shivay"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Omnamah Shivay
-      </option>
-      <option
-        value="Amit Garg"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Amit Garg
-      </option>
-      <option
-        value="Deepak Kumar Mehta"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Deepak Kumar Mehta
-      </option>
-      <option
-        value="Prabhjot Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Prabhjot Singh
-      </option>
-      <option
-        value="Surender Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Surender Singh
-      </option>
-      <option
-        value="Vinay Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Vinay Sharma
-      </option>
-      <option
-        value="Vijay Kumar"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Vijay Kumar
-      </option>
+      {replacement.map((replace) => (
+        <option
+          key={replace}
+          value={replace}
+          className="bg-black text-[1rem] sm:text-[1.5rem]"
+        >
+          {replace}
+        </option>
+      ))}
     </select>
   )
 
@@ -171,123 +95,15 @@ function Absent() {
       >
         Pick a teacher ...
       </option>
-      <option
-        value="Shikha Gupta"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Shikha Gupta
-      </option>
-      <option
-        value="Neha Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Neha Sharma
-      </option>
-      <option
-        value="Sharanjit Kaur"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Sharanjit Kaur
-      </option>
-      <option
-        value="Durgesh Srivastava"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Durgesh Srivastava
-      </option>
-      <option
-        value="Richa Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Richa Singh
-      </option>
-      <option
-        value="Arun Mittal"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Arun Mittal
-      </option>
-      <option
-        value="Ashok Kumar"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Ashok Kumar
-      </option>
-      <option value="Leeza" className="bg-black text-[1rem] sm:text-[1.5rem]">
-        Leeza
-      </option>
-      <option
-        value="Resham Arya"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Resham Arya
-      </option>
-      <option
-        value="Hariharan"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Hariharan
-      </option>
-      <option
-        value="Shivani Aggarwal"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Shivani Aggarwal
-      </option>
-      <option
-        value="Archna Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Archna Sharma
-      </option>
-      <option
-        value="Monika Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Monika Singh
-      </option>
-      <option
-        value="Omnamah Shivay"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Omnamah Shivay
-      </option>
-      <option
-        value="Amit Garg"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Amit Garg
-      </option>
-      <option
-        value="Deepak Kumar Mehta"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Deepak Kumar Mehta
-      </option>
-      <option
-        value="Prabhjot Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Prabhjot Singh
-      </option>
-      <option
-        value="Surender Singh"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Surender Singh
-      </option>
-      <option
-        value="Vinay Sharma"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Vinay Sharma
-      </option>
-      <option
-        value="Vijay Kumar"
-        className="bg-black text-[1rem] sm:text-[1.5rem]"
-      >
-        Vijay Kumar
-      </option>
+      {replacement.map((replace) => (
+        <option
+          key={replace}
+          value={replace}
+          className="bg-black text-[1rem] sm:text-[1.5rem]"
+        >
+          {replace}
+        </option>
+      ))}
     </select>
   )
 
@@ -318,6 +134,8 @@ function Absent() {
       await addDoc(collection(db, 'absentee'), userdata)
     }
 
+    select1.current.value = 'Pick a teacher'
+    select2.current.value = 'Pick a teacher'
     setLoading(false)
   }
 
